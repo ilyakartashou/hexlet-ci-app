@@ -1,4 +1,4 @@
-name: project CI
+name: hexlet-ci-app.yml
 
 on: push
 
