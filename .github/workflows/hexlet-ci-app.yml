@@ -1,18 +1,23 @@
-# file: .github/workflows/hello-world.yml
-name: hexlet-ci-app.yml
-# on – определяет события, которые запускают воркфлоу
+name: project CI
+
 on: push
+
 jobs:
-  # build – произвольно выбранное имя задания
-  # их может быть больше одного
   build:
-    # операционная система для работы воркфлоу
     runs-on: ubuntu-latest
-    steps: # список шагов, которые надо выполнить
-      # экшен — выполняет какую-то задачу
-      # checkout — клонирует репозиторий
+
+    steps:
       - uses: actions/checkout@v3
-      # run – произвольная bash-команда
+
+      - uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: "npm"
+
       - run: make setup
       - run: make test
       - run: make lint
